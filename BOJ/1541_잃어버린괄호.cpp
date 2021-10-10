@@ -3,9 +3,9 @@
 using namespace std;
 
 int main() {
-	string str ="";
+	string str = "";
 	cin >> str;
-	
+
 	string number = "";
 	int result = 0;
 	bool minus_flag = false;
@@ -18,12 +18,12 @@ int main() {
 			else {
 				result += stoi(number);
 			}
-			if (str[i] == '-') minus_flag = true;
+			minus_flag = (str[i] == '-') ? true : false;
 			number = "";
 		}
 		else number += str[i]; //*****else 안써줘서 이상하게 연산한 것....
 	}
-	cout <<  result;
+	cout << result;
 
 	return 0;
 }
