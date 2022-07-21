@@ -1,27 +1,20 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
 using namespace std;
 
 int main() {
-	int testcaseNum, west, east;
-	int dp[31][31] = { 0, };
+	int testcase, left, right;
+	long long answer = 1;
 
-	for (int i = 1; i <= 30; i++) {
-		dp[i][1] = i;
-	}
-	for (int i = 2; i <= 30; i++) {
-		for (int j = i; j <= 30; j++) {
-			for (int k = j - 1; k >= i - 1; k--) {
-				dp[j][i] += dp[k][i - 1];
-			}
+	cin >> testcase;
+	while (testcase--) {
+		cin >> left >> right;
+		answer = 1;
+		if (left > right / 2) left = right - left;//5C4 -> 5C1
+		for (int i = 0; i < left; i++) {
+			answer *= right - i;
+			answer /= 1 + i;
 		}
-	}
-
-	cin >> testcaseNum;
-	for (int i = 0; i < testcaseNum; i++) {
-		cin >> west >> east;
-		cout << dp[east][west] << "\n";
+		cout << answer << "\n";
 	}
 	return 0;
 }
