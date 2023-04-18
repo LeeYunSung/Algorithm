@@ -1,48 +1,29 @@
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <iostream>
 using namespace std;
 
-string solution(vector<int> numbers, string hand) {
-	string answer = "";
-	vector<pair<int, int>> key_pad = { {3,1},
-									 {0,0},{0,1},{0,2},
-									 {1,0},{1,1},{1,2},
-									 {2,0},{2,1},{2,2},
-									 {3,0},{3,2} };//0,1,2,3,4,5,6,7,8,9,*,#
-	int left_hand = 10; //*위치
-	int right_hand = 11; //#위치
+vector<int> solution(vector<int> array, vector<vector<int>> commands) {
+	vector<int> answer;
 
-	for (auto& n : numbers) {
-		if (n == 1 || n == 4 || n == 7) {
-			left_hand = n;
-			answer += "L";
-		}
-		else if (n == 3 || n == 6 || n == 9) {
-			right_hand = n;
-			answer += "R";
-		}
-		else { //2, 5, 8, 0
-			int left_distance = abs((key_pad[left_hand].first - key_pad[n].first)) + abs((key_pad[left_hand].second - key_pad[n].second));
-			int right_distance = abs((key_pad[right_hand].first - key_pad[n].first)) + abs((key_pad[right_hand].second - key_pad[n].second));
-			if (left_distance < right_distance) {
-				left_hand = n;
-				answer += "L";
-			}
-			else if (left_distance > right_distance) {
-				right_hand = n;
-				answer += "R";
-			}
-			else {
-				if (hand == "right") {
-					right_hand = n;
-					answer += "R";
-				}
-				else if (hand == "left") {
-					left_hand = n;
-					answer += "L";
-				}
-			}
-		}
+	//명령 갯수만큼 반복
+	for (int i = 0; i < commands.size(); i++) {
+
+		//명령어 값 보기좋게 선언
+		int beginIndex = commands[i][0];
+		int endIndex = commands[i][1];
+		int answerIndex = commands[i][2];
+
+		//beginInde ~ endIndex까지 값 추출
+		vector<int> partArray(array.begin() + beginIndex - 1, array.begin() + endIndex);
+
+		//오름차순 정렬
+		sort(partArray.begin(), partArray.end());
+
+		//K번째 수 추출
+		answer.push_back(partArray[answerIndex - 1]);
 	}
+
 	return answer;
 }
