@@ -1,22 +1,24 @@
 #include <string>
 #include <vector>
-#include <iostream>
 using namespace std;
 
-vector<vector<int>> visited;
-int networkCount;
 
-void DFS(vector<vector<int>>& computers, int computer) {
-	computers[computer][computer] = 0;
-	for (int i = 0; i < computers[computer].size(); i++) {
-		if (computers[computer][i] == 1) {
-			DFS(computers, i);
-		}
+bool isNetwork(vector<vector<int>>& computers, int n) {
+	if (!computers[n][n]) return false;
+	computers[n][n] = 0;
+
+	for (int i = 0; i < computers[i].size(); i++) {
+		if (computers[n][i] == 1) isNetwork(computers, i);
 	}
-	networkCount++;
+	return true;
 }
 
 int solution(int n, vector<vector<int>> computers) {
-	DFS(computers, 0);
-	return networkCount;
+	int answer = 0;
+
+	for (int i = 0; i < n; i++) {
+		if (isNetwork(computers, i)) answer++;
+	}
+
+	return answer;
 }
