@@ -8,20 +8,25 @@ int BFS(vector<vector<int>> board, int characterX, int characterY, int itemX, in
 	int direction[4][2] = { {0,-1},{0,1},{-1,0},{1,0} };
 	queue<pair<int, int>> q;
 
-	q.emplace(characterY, characterY);
+	q.emplace(characterY, characterX);
 	while (!q.empty()) {
 		int y = q.front().first;
 		int x = q.front().second;
 		q.pop();
 
-		if (y == itemY && x == itemX) break;
-
+		if (y == itemY && x == itemX) {
+			break;
+		}
 		for (int i = 0; i < 4; i++) {
 			int nextY = y + direction[i][1];
 			int nextX = x + direction[i][0];
 
+			//좌표 범위체크
+			if (nextX < 0 || nextX >= board.size() || nextY < 0 || nextY >= board[0].size()) continue;
+			//방문안했으면
 			if (board[nextY][nextX] == 1) {
 				q.emplace(nextY, nextX);
+				//1추가해서 방문체크겸 이동거리 저장
 				board[nextY][nextX] = board[y][x] + 1;
 			}
 		}
@@ -47,6 +52,7 @@ int solution(vector<vector<int>> rectangle, int characterX, int characterY, int 
 		x1 = rectangle[i][0], y1 = rectangle[i][1];
 		x2 = rectangle[i][2], y2 = rectangle[i][3];
 
+		// 좌표값이라 행열로 따지면 x가 열이고 y가 행이라서 반대로 만들어준다.
 		for (int y = y1; y <= y2; y++) {
 			for (int x = x1; x <= x2; x++) {
 				board[y][x] = 1;
