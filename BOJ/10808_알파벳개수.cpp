@@ -1,21 +1,16 @@
 #include <iostream>
 #include <string>
-#include <vector>
 using namespace std;
-
-const int FIRST_NUM = 97;
 
 int main() {
 	string word;
-	vector<int> v(26);
-	long long idx;
+	int cnt[26] = { 0, };
 
-	cin >> word;	
-	for (int i = 0; i < word.size(); i++) {
-		int wordNum = (int)word[i] - FIRST_NUM;
-		v[wordNum]++;
+	cin >> word;
+	for (char a : word) {
+		cnt[a - 'a']++;
 	}
-	for (int i : v) cout << i << " ";
+	for (int i : cnt) cout << i << " ";
 
 	return 0;
 }
